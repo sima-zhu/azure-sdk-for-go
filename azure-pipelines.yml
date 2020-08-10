@@ -35,7 +35,7 @@ jobs:
       displayName: "Select Go Version"
     - template: eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
-        Directory: $(sdkPath)
+        workingDirectory: '$(sdkPath)'
     - script: |
         set -e
         mkdir -p '$(GOPATH)/bin'
