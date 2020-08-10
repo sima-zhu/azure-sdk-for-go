@@ -56,15 +56,15 @@ jobs:
     - script: go build -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Build'
+    - template: eng/common/pipelines/templates/steps/verify-links.yml
+      parameters:
+        workingDirectory: '$(sdkPath)'
     - script: go test $(dirname $(find . -path ./vendor -prune -o -path ./sdk -prune -o -path ./sdk -prune -o -name '*_test.go' -print) | sort -u)
       workingDirectory: '$(sdkPath)'
       displayName: 'Run Tests'
     - script: go run ./tools/apidiff/main.go packages ./services FETCH_HEAD~1 FETCH_HEAD --copyrepo --breakingchanges || $IGNORE_BREAKING_CHANGES
       workingDirectory: '$(sdkPath)'
       displayName: 'Display Breaking Changes'
-    - template: eng/common/pipelines/templates/steps/verify-links.yml
-      parameters:
-        workingDirectory: '$(GOPATH)/sdk'
     - script: go run ./tools/pkgchk/main.go ./services --exceptions ./tools/pkgchk/exceptions.txt
       workingDirectory: '$(sdkPath)'
       displayName: 'Verify Package Directory'
