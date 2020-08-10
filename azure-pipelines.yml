@@ -33,7 +33,9 @@ jobs:
       inputs:
         version: '$(go.version)'
       displayName: "Select Go Version"
-
+    - template: ../../../common/pipelines/templates/steps/verify-links.yml
+      parameters:
+        Directory: $(sdkPath)
     - script: |
         set -e
         mkdir -p '$(GOPATH)/bin'
