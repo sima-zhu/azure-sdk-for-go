@@ -33,7 +33,7 @@ jobs:
       inputs:
         version: '$(go.version)'
       displayName: "Select Go Version"
-    - template: ../../../common/pipelines/templates/steps/verify-links.yml
+    - template: eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
         Directory: $(sdkPath)
     - script: |
