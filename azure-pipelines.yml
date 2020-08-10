@@ -42,6 +42,10 @@ jobs:
         echo '##vso[task.prependpath]$(GOROOT)/bin'
         echo '##vso[task.prependpath]$(GOPATH)/bin'
       displayName: 'Create Go Workspace'
+    - template: eng/common/pipelines/templates/steps/verify-links.yml
+      parameters:
+        SourcesDirectory: ''
+        Directory: ''
     - script: |
         set -e
         go version
@@ -56,10 +60,6 @@ jobs:
     - script: go build -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Build'
-    - template: eng/common/pipelines/templates/steps/verify-links.yml
-      parameters:
-        SourcesDirectory: ''
-        Directory: ''
     - script: go test $(dirname $(find . -path ./vendor -prune -o -path ./sdk -prune -o -path ./sdk -prune -o -name '*_test.go' -print) | sort -u)
       workingDirectory: '$(sdkPath)'
       displayName: 'Run Tests'
