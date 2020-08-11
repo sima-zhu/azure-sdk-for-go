@@ -44,7 +44,6 @@ jobs:
       displayName: 'Create Go Workspace'
     - template: eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
-        SourcesDirectory: ''
         Directory: ''
     - script: |
         set -e
