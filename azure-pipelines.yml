@@ -53,11 +53,11 @@ jobs:
     - task: PowerShell@2
       displayName: Link verification check
       inputs:
-        pwsh: true
-        workingDirectory: '$(sdkPath)'
-        filePath: '$(sdkPath)/eng/common/scripts/Verify-Links.ps1'
-        arguments: 
-          -urls $(Get-ChildItem -Path *.md -Recurse | Where {$_.FullName -notlike "/vendor/*" -and $_.FullName -notlike "*/sdk/*"}) -rootUrl 'file://$(sdkPath)' -recursive:$false 
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          
+          Get-ChildItem -Path *.md -Recurse | Where {$_.FullName -notlike "/vendor/*" -and $_.FullName -notlike "*/sdk/*"}
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
