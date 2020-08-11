@@ -56,7 +56,7 @@ jobs:
         targetType: 'inline'
         script: |
           # Write your PowerShell commands here.
-          Get-ChildItem -Path '$(sdkPath)/*.md' -Recurse | Where {$_.FullName -notlike "/vendor/*" -and $_.FullName -notlike "*/sdk/*"}
+          Get-ChildItem -Path '$(sdkPath)/*.md' -Recurse | Where {$_.FullName -notlike "*/vendor/*" -and $_.FullName -notlike "*/services/*"}
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
