@@ -42,14 +42,6 @@ jobs:
         echo '##vso[task.prependpath]$(GOROOT)/bin'
         echo '##vso[task.prependpath]$(GOPATH)/bin'
       displayName: 'Create Go Workspace'
-    - script: |
-        set -e
-        go version
-        curl -sSL https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-        dep ensure -v
-        go get -u golang.org/x/lint/golint
-      workingDirectory: '$(sdkPath)'
-      displayName: 'Install Dependencies'
     - task: PowerShell@2
       inputs:
         filePath: 'eng\common\scripts\Verify-Links.ps1'
