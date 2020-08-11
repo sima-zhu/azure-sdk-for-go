@@ -44,7 +44,7 @@ jobs:
       displayName: 'Create Go Workspace'
     - task: PowerShell@2
       inputs:
-        filePath: 'eng\common\scripts\Verify-Links.ps1'
+        filePath: '$(system.defaultWorkingDirectory)\common\scripts\Verify-Links.ps1'
         arguments: '-rootUrl $(system.defaultWorkingDirectory) -recursive:$false'
         workingDirectory: '$(system.defaultWorkingDirectory)'
       displayName: "Verify links"
