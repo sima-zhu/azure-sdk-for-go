@@ -53,8 +53,8 @@ jobs:
     - task: PowerShell@2
       inputs:
         filePath: 'eng/common/scripts/Verify-Links.ps1'
-        arguments: '-rootUrl $(Build.SourceDirectory) -recursive:$false'
-        workingDirectory: '$(Build.SourceDirectory)'
+        arguments: '-rootUrl $(system.defaultWorkingDirectory) -recursive:$false'
+        workingDirectory: '$(system.defaultWorkingDirectory)'
       displayName: "Verify links"
     - script: go run ./tools/apidiff/main.go packages ./services FETCH_HEAD~1 FETCH_HEAD --copyrepo --breakingchanges || $IGNORE_BREAKING_CHANGES
       workingDirectory: '$(sdkPath)'
