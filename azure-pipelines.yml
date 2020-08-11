@@ -54,7 +54,8 @@ jobs:
     - template: eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
         SourcesDirectory: ''
-        Directory: ''
+        Directory: sdk/${{ parameters.ServiceDirectory }}
+        
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
