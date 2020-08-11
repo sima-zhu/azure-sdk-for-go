@@ -27,7 +27,6 @@ jobs:
       sdkPath: '$(GOPATH)/src/github.com/$(build.repository.name)'
       IGNORE_BREAKING_CHANGES: true
       go.list.filter: '| grep -v vendor | grep -v azure-sdk-for-go/sdk'
-      IgnoreLinksFile: "$(Build.SourcesDirectory)/eng/ignore-links.txt"
 
     steps:
     - task: GoTool@0
@@ -47,10 +46,10 @@ jobs:
       displayName: Link verification check
       inputs:
         pwsh: true
-        workingDirectory: $(Build.SourcesDirectory)
-        filePath: eng/common/scripts/Verify-Links.ps1 
+        workingDirectory: '$(sdkPath)'
+        filePath: ./eng/common/scripts/Verify-Links.ps1 
         arguments: >
-          -urls $(dir -r -i *.md) -rootUrl "file://$(Build.SourcesDirectory)/" -recursive:$false -ignoreLinksFile '$(IgnoreLinksFile)'
+          -urls $(dir -r -i *.md) -rootUrl '$(sdkPath)' -recursive:$false 
     - script: |
         set -e
         go version
