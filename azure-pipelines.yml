@@ -50,13 +50,9 @@ jobs:
         go get -u golang.org/x/lint/golint
       workingDirectory: '$(sdkPath)'
       displayName: 'Install Dependencies'
-    - task: PowerShell@2
-      displayName: Link verification check
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your PowerShell commands here.
-          Get-ChildItem -Path '$(sdkPath)/*.md' -Recurse | Where {$_.FullName -notlike "*/vendor/*" -and $_.FullName -notlike "*/services/*"}
+    - template: /eng/common/pipelines/templates/steps/verify-links.yml
+      parameters:
+        Directory: sdk/${{ parameters.ServiceDirectory }}
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
