@@ -52,7 +52,9 @@ jobs:
       displayName: 'Install Dependencies'
     - template: /eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
-        Directory: '$(sdkPath)'
+        Workspace: '$(sdkPath)'
+        Directory: ''
+        UrlLinks: $(Get-ChildItem -Path '$(sdkPath)/*.md' -Recurse | Where {$_.FullName -notlike "*/vendor/*" -and $_.FullName -notlike "*/sdk/*"})
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
@@ -62,11 +64,6 @@ jobs:
     - script: go test $(dirname $(find . -path ./vendor -prune -o -path ./sdk -prune -o -path ./sdk -prune -o -name '*_test.go' -print) | sort -u)
       workingDirectory: '$(sdkPath)'
       displayName: 'Run Tests'
-    - template: /eng/common/pipelines/templates/steps/verify-links.yml
-      parameters:
-        Workspace: '$(sdkPath)'
-        Directory: ''
-        UrlLinks: $(Get-ChildItem -Path '$(sdkPath)/*.md' -Recurse | Where {$_.FullName -notlike "*/vendor/*" -and $_.FullName -notlike "*/sdk/*"})
     - script: go run ./tools/apidiff/main.go packages ./services FETCH_HEAD~1 FETCH_HEAD --copyrepo --breakingchanges || $IGNORE_BREAKING_CHANGES
       workingDirectory: '$(sdkPath)'
       displayName: 'Display Breaking Changes'
