@@ -52,7 +52,7 @@ jobs:
       displayName: 'Install Dependencies'
     - template: /eng/common/pipelines/templates/steps/verify-links.yml
       parameters:
-        Directory: sdk/${{ parameters.ServiceDirectory }}
+        Directory: '$(sdkPath)'
     - script: go vet -v $(go list ./... $(go.list.filter))
       workingDirectory: '$(sdkPath)'
       displayName: 'Vet'
