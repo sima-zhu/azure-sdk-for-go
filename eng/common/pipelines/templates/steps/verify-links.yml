@@ -9,6 +9,6 @@ steps:
     inputs:
       pwsh: true
       workingDirectory: ${{ parameters.WorkSpace }}
-      filePath: ${{ parameters.WorkSpace }}/eng/common/scripts/Verify-Links.ps1 
+      filePath: /eng/common/scripts/Verify-Links.ps1 
       arguments: >
         -urls ${{parameters.UrlLinks}} -rootUrl "file://${{ parameters.WorkSpace }}/${{parameters.Directory}}" -recursive:$false -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
