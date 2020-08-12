@@ -1,14 +1,14 @@
 parameters:
   Directory: 'not-specified'
   IgnoreLinksFile: "$(Build.SourcesDirectory)/eng/ignore-links.txt"
-
-
+  WorkSpace: $(Build.SourcesDirectory)
+  UrlLinks: $(dir -r -i *.md)
 steps:
   - task: PowerShell@2
     displayName: Link verification check
     inputs:
       pwsh: true
-      workingDirectory: $(Build.SourcesDirectory)/${{ parameters.Directory }}
+      workingDirectory: ${{ parameters.WorkSpace }}
       filePath: eng/common/scripts/Verify-Links.ps1 
       arguments: >
-        -urls $(dir -r -i *.md) -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" -recursive:$false -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
+        -urls ${{parameters.UrlLinks}} -rootUrl "file://${{ parameters.WorkSpace }}/${{parameters.Directory}}" -recursive:$false -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}

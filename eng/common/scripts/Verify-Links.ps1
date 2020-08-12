@@ -211,7 +211,8 @@ if ($urls) {
   if ($urls.Count -eq 0) {
     Write-Host "Usage $($MyInvocation.MyCommand.Name) <urls>";
     exit 1;
-  }  
+  } 
+  Write-Host $urls; 
 }
 
 if ($PSVersionTable.PSVersion.Major -lt 6)
